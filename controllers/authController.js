@@ -1,4 +1,6 @@
-const { User } = require("mern-db-layer");
+const { models } = require('mern-db-layer');
+const { User } = models; // ✅ Correct way
+
 const bcrypt = require('bcryptjs');
 
 exports.signup = async (req, res) => {
