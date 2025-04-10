@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const db = require('mern-db-layer');
 
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGO_URI);
-  console.log("✅ Connected to MongoDB (auth-service)");
+  await db.connect(process.env.MONGO_URI);
+  console.log("✅ Connected to MongoDB (todo-service)");
 };
 
 module.exports = connectDB;
