@@ -4,7 +4,7 @@ const { User } = models; // ✅ Correct way
 const bcrypt = require('bcryptjs');
 
 exports.signup = async (req, res) => {
-  const { username, email, password } = req.body;
+  let { username, email, password } = req.body;
   if (!username || !email || !password) return res.status(400).json({ error: "All fields are required" });
 
   Email = email.toLowerCase();
@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
   if (!email || !password) return res.status(400).json({ error: "Email and password are required" });
 
   Email = email.toLowerCase();
