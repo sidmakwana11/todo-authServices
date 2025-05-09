@@ -8,13 +8,14 @@ exports.signup = async (req, res) => {
   if (!username || !email || !password) return res.status(400).json({ error: "All fields are required" });
 
   email = email.toLowerCase();
-  
+
   const existingUser = await User.findOne({ email });
   if (existingUser) return res.status(400).json({ error: "Email already registered" });
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await User.create({ username, email, password: hashedPassword });
-  res.status(201).json({ message: "User registered successfully" });
+  const newUser = await User.create({ username, email, password: hashedPassword });
+  res.status(201).json({ message: "User registered successfully", userId: newUser._id, username: newUser.username });
+
 };
 
 exports.login = async (req, res) => {
@@ -22,7 +23,7 @@ exports.login = async (req, res) => {
   if (!email || !password) return res.status(400).json({ error: "Email and password are required" });
 
   email = email.toLowerCase();
-  
+
   const user = await User.findOne({ email });
   if (!user || !(await bcrypt.compare(password, user.password)))
     return res.status(401).json({ error: "Invalid email or password" });
